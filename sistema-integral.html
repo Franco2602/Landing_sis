@@ -251,7 +251,8 @@
         .plan-badge-base { background: rgba(255,255,255,0.07); color: var(--muted); }
         .plan-badge-pro  { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
         @media (max-width: 700px) { .roles-grid { grid-template-columns: 1fr; } }
-        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 860px; margin: 0 auto; }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; max-width: 1100px; margin: 0 auto; }
+        @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; max-width: 480px; } }
         .plan-card {
             border-radius: 12px; padding: 40px 36px;
             border: 1px solid var(--border);
@@ -712,47 +713,80 @@
             <p style="max-width:480px;margin:12px auto 0;">Empieza gratis por 30 días. Sin tarjeta de crédito, sin compromiso. Cancela cuando quieras.</p>
         </div>
         <div class="pricing-grid">
-            <div class="plan-card reveal from-left">
-                <span class="plan-name">Plan Base</span>
+            <!-- Plan Demo -->
+            <div class="plan-card reveal">
+                <span class="plan-name">Para comenzar</span>
+                <h3 style="font-size:1.5rem;color:var(--white);margin-bottom:6px;">Plan Demo</h3>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Prueba la experiencia completa con tu equipo por 30 días.</p>
                 <div class="plan-price-wrap">
-                    <span class="plan-price">$37.990</span>
-                    <span class="plan-period"> / mes</span>
+                    <span class="plan-price">$0</span>
                 </div>
-                <span class="plan-trial">✓ 30 días gratis — sin tarjeta de crédito</span>
+                <span class="plan-trial" style="color:#fbbf24;">Sin costo — Sin tarjeta</span>
                 <ul class="plan-features-list">
-                    <li><span class="material-symbols-outlined">check_circle</span>Órdenes de trabajo ilimitadas</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Gestión de inventario y stock</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Base de clientes y vehículos</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Agenda digital</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Reportes PDF profesionales</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Dashboard con métricas clave</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Hasta 3 usuarios con roles (admin + trabajadores)</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Panel individual por trabajador</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Soporte vía WhatsApp</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Hasta 3 usuarios</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Hasta 50 productos</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>30 OTs diarias</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Dashboard visual completo</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Clientes ilimitados</li>
+                    <li class="dim"><span class="material-symbols-outlined" style="color:var(--red);">cancel</span>Sin control de inventario</li>
+                    <li class="dim"><span class="material-symbols-outlined" style="color:var(--red);">cancel</span>Sin auditoría de seguridad</li>
+                    <li class="dim"><span class="material-symbols-outlined" style="color:var(--red);">cancel</span>Permisos fijos (no editables)</li>
                 </ul>
-                <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;">
-                    Comenzar ahora
+                <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:auto;">
+                    Comenzar gratis
                     <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
                 </a>
             </div>
-            <div class="plan-card featured-plan reveal from-right">
-                <span class="plan-name">Plan Pro</span>
+
+            <!-- Plan Emprendedor -->
+            <div class="plan-card featured-plan reveal" style="border-color:rgba(99,102,241,0.4);position:relative;">
+                <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#6366f1;color:#fff;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 16px;border-radius:20px;white-space:nowrap;">Más popular</div>
+                <span class="plan-name" style="color:#a5b4fc;">Crecimiento</span>
+                <h3 style="font-size:1.5rem;color:var(--white);margin-bottom:6px;">Emprendedor</h3>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Operación digital sin fricción para talleres activos.</p>
                 <div class="plan-price-wrap">
-                    <span class="plan-price" style="font-size:1.8rem;color:var(--muted);">A medida</span>
+                    <span class="plan-price">$37.990</span>
+                    <span class="plan-period"> /mes</span>
                 </div>
-                <span class="plan-trial" style="color:var(--muted);">Para operaciones con equipo grande y autonomía total</span>
+                <span class="plan-trial">✓ 30 días gratis — sin tarjeta de crédito</span>
                 <ul class="plan-features-list">
-                    <li><span class="material-symbols-outlined">check_circle</span>Todo del Plan Base</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Usuarios ilimitados — todo el equipo con acceso</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Trabajadores operan 100% autónomos desde su panel</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>El jefe monitorea todo en tiempo real sin intervenir</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Permisos granulares por usuario y módulo</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Módulos personalizados para tu operación</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Integraciones con tus sistemas actuales</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>Implementación asistida + capacitación del equipo</li>
-                    <li><span class="material-symbols-outlined">check_circle</span>SLA de soporte prioritario</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Hasta 7 usuarios</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Órdenes ilimitadas</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Hasta 350 productos</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Agenda digital (30 citas/día)</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Ventas internas</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Dashboard operativo</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Panel individual por trabajador</li>
+                    <li class="dim"><span class="material-symbols-outlined" style="color:var(--red);">cancel</span>Sin inventario de stock</li>
+                    <li class="dim"><span class="material-symbols-outlined" style="color:var(--red);">cancel</span>Seguridad estándar (sin logs)</li>
                 </ul>
-                <a href="index.html#contacto" class="btn btn-outline" style="width:100%;justify-content:center;">
+                <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:auto;">
+                    Activar plan
+                    <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+                </a>
+            </div>
+
+            <!-- Plan PRO -->
+            <div class="plan-card featured-plan reveal" style="background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(139,92,246,0.08));border-color:rgba(139,92,246,0.3);">
+                <span class="plan-name" style="color:#c4b5fd;">★ Enterprise</span>
+                <h3 style="font-size:1.5rem;color:var(--white);margin-bottom:6px;">Plan PRO</h3>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Control total y gestión profesional de activos.</p>
+                <div class="plan-price-wrap">
+                    <span class="plan-price">$58.990</span>
+                    <span class="plan-period"> /mes</span>
+                </div>
+                <span class="plan-trial" style="color:#a5b4fc;">✓ Todo ilimitado desde el primer día</span>
+                <ul class="plan-features-list">
+                    <li><span class="material-symbols-outlined">check_circle</span>Usuarios ILIMITADOS</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Productos ILIMITADOS</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Inventario completo de stock</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Auditoría de seguridad (logs completos)</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Permisos editables por usuario</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Soporte prioritario</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Clientes ilimitados</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Agenda ilimitada (sin tope de citas)</li>
+                </ul>
+                <a href="index.html#contacto" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:auto;border-color:rgba(139,92,246,0.4);color:#c4b5fd;">
                     Hablar con el equipo
                     <span class="material-symbols-outlined" style="font-size:16px;">chat</span>
                 </a>
