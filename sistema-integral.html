@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TNLQLLYRFW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-TNLQLLYRFW');
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sistema Integral — Plataforma SaaS para talleres mecánicos y empresas de servicio. Gestiona órdenes de trabajo, inventario, clientes, agenda y finanzas desde un solo panel." />
+    <title>Sistema Integral | CoreProject.cl — Plataforma SaaS para Talleres</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@300..400,0&display=swap" rel="stylesheet" />
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg:        #0c0e14;
+            --bg-2:      #11141c;
+            --bg-3:      #181c27;
+            --border:    rgba(255,255,255,0.07);
+            --border-md: rgba(255,255,255,0.13);
+            --text:      #e8eaf0;
+            --muted:     #7a8099;
+            --muted-2:   #4a5068;
+            --accent:    #ffffff;
+            --white:     #ffffff;
+            --green:     #4ade80;
+            --red:       #f87171;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { display: block; max-width: 100%; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+        .section    { padding: 96px 0; border-bottom: 1px solid var(--border); }
+        .eyebrow {
+            display: inline-block;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
+        }
+        h1, h2, h3, h4 { color: var(--white); font-weight: 700; line-height: 1.2; }
+        h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); letter-spacing: -0.035em; }
+        h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); letter-spacing: -0.03em; }
+        h3 { font-size: 1.1rem; font-weight: 600; }
+        p  { color: var(--muted); line-height: 1.78; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 14px; font-weight: 600; padding: 13px 24px;
+            border-radius: 2px; cursor: pointer;
+            transition: opacity .2s, background .2s, transform .2s, box-shadow .2s; border: none;
+            font-family: inherit;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary  { background: #ffffff; color: #0c0e14; }
+        .btn-primary:hover  { background: #d8dbe8; box-shadow: 0 8px 24px rgba(255,255,255,0.12); }
+        .btn-outline  { background: transparent; color: var(--text); border: 1px solid var(--border-md); }
+        .btn-outline:hover  { border-color: rgba(255,255,255,0.28); color: #fff; }
+
+        /* ── Navbar ────────────────────────────────────────────────────── */
+        #navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 68px;
+            background: rgba(12,14,20,0.94);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center;
+            transition: box-shadow .3s;
+        }
+        #navbar .container { width: 100%; }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 24px; }
+        .nav-left { display: flex; align-items: center; gap: 24px; }
+        .nav-back { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--muted); transition: color .2s; }
+        .nav-back:hover { color: var(--white); }
+        .nav-back .material-symbols-outlined { font-size: 18px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; color: var(--white); }
+        .nav-logo img { width: 30px; height: 30px; object-fit: contain; }
+        .nav-divider { width: 1px; height: 20px; background: var(--border-md); }
+        .nav-product-name { font-size: 14px; font-weight: 600; color: var(--muted); }
+        #navbar.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.4); border-bottom-color: var(--border-md); }
+
+        /* ── Hero ───────────────────────────────────────────────────────── */
+        #hero {
+            padding-top: 168px; padding-bottom: 120px;
+            position: relative; overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(255,255,255,0.04) 0%, transparent 70%),
+                        var(--bg);
+        }
+        #hero-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        #hero .container { position: relative; z-index: 1; }
+        .hero-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2);
+            color: var(--green); font-size: 12px; font-weight: 600;
+            padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+            animation: pulseBadge 2.5s ease-in-out infinite;
+        }
+        @keyframes pulseBadge {
+            0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.1); }
+            50%      { box-shadow: 0 0 16px 4px rgba(74,222,128,0.12); }
+        }
+        .hero-badge-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: blink 1.4s ease-in-out infinite; }
+        .hero-title { margin-bottom: 22px; }
+        .hero-title .hl { color: var(--white); position: relative; }
+        .hero-title .hl::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:2px; background:rgba(255,255,255,0.25); border-radius:2px; }
+        .hero-desc { font-size: 18px; max-width: 620px; margin: 0 auto 40px; }
+        .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+        .hero-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 2rem; font-weight: 800; color: var(--white); letter-spacing: -0.04em; display: block; }
+        .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 2px; display: block; }
+
+        /* ── Screenshot ─────────────────────────────────────────────────── */
+        #screenshot { background: var(--bg-2); }
+        .screenshot-wrap {
+            border-radius: 14px; overflow: hidden;
+            border: 1px solid var(--border-md);
+            box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .screenshot-topbar {
+            background: var(--bg-3, #181c27); padding: 12px 18px;
+            display: flex; align-items: center; gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .dot { width: 11px; height: 11px; border-radius: 50%; }
+        .dot-r { background: #f87171; } .dot-y { background: #fbbf24; } .dot-g { background: #4ade80; }
+        .screenshot-url { margin-left: 12px; font-size: 12px; color: var(--muted-2); font-family: monospace; }
+        .screenshot-img { width: 100%; display: block; }
+
+        /* ── Modules ─────────────────────────────────────────────────────── */
+        .modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .module-card {
+            background: var(--bg); padding: 36px 30px;
+            transition: background .25s, transform .35s cubic-bezier(.22,.68,0,1.2), box-shadow .25s;
+        }
+        .module-card:hover { background: var(--bg-2); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+        .module-icon {
+            width: 46px; height: 46px; display: flex; align-items: center; justify-content: center;
+            border-radius: 10px; background: rgba(255,255,255,0.06); color: var(--muted);
+            margin-bottom: 22px; transition: transform .3s cubic-bezier(.22,.68,0,1.2), background .2s;
+        }
+        .module-card:hover .module-icon { transform: translateY(-4px) scale(1.1); background: rgba(255,255,255,0.1); }
+        .module-card h3 { margin-bottom: 10px; font-size: 1rem; }
+        .module-card p { font-size: 14px; }
+        .module-features { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+        .module-features li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--muted); }
+        .module-features li::before { content: '→'; color: rgba(255,255,255,0.25); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+        /* ── How it works ─────────────────────────────────────────────── */
+        #como-funciona { background: var(--bg-2); }
+        .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .step-card {
+            background: var(--bg-2); padding: 36px 28px;
+            transition: background .25s, transform .3s cubic-bezier(.22,.68,0,1.2);
+        }
+        .step-card:hover { background: var(--bg-3, #181c27); transform: translateY(-4px); }
+        .step-num-big { font-size: 11px; font-weight: 700; color: var(--muted-2); letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 20px; }
+        .step-card h3 { font-size: 1rem; margin-bottom: 10px; }
+        .step-card p  { font-size: 13.5px; }
+
+        /* ── For who ──────────────────────────────────────────────────── */
+        #para-quien { }
+        .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .audience-card {
+            border-radius: 12px; padding: 36px;
+            transition: transform .3s cubic-bezier(.22,.68,0,1.2), box-shadow .25s;
+        }
+        .audience-card:hover { transform: translateY(-5px); }
+        .audience-no {
+            background: rgba(248,113,113,0.05); border: 1px solid rgba(248,113,113,0.12);
+        }
+        .audience-no:hover { box-shadow: 0 16px 40px rgba(248,113,113,0.08); }
+        .audience-yes {
+            background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.18);
+        }
+        .audience-yes:hover { box-shadow: 0 16px 40px rgba(74,222,128,0.1); }
+        .audience-title { font-size: 16px; font-weight: 700; margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+        .audience-no  .audience-title { color: var(--red); }
+        .audience-yes .audience-title { color: var(--green); }
+        .audience-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+        .audience-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text); }
+        .audience-list li span.ico { font-size: 18px; flex-shrink: 0; margin-top: -1px; }
+
+        /* ── Pricing ──────────────────────────────────────────────────── */
+        #precios { background: var(--bg-2); }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 860px; margin: 0 auto; }
+        .plan-card {
+            border-radius: 12px; padding: 40px 36px;
+            border: 1px solid var(--border);
+            transition: border-color .25s, transform .35s cubic-bezier(.22,.68,0,1.2), box-shadow .25s;
+        }
+        .plan-card:hover { border-color: var(--border-md); transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.3); }
+        .plan-card.featured-plan {
+            border-color: var(--border-md);
+            background: var(--bg-3, #181c27);
+            position: relative; overflow: hidden;
+        }
+        .plan-card.featured-plan::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+        .plan-name { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; display: block; }
+        .plan-price-wrap { margin-bottom: 10px; }
+        .plan-price { font-size: 2.6rem; font-weight: 800; color: var(--white); letter-spacing: -0.04em; }
+        .plan-period { font-size: 14px; color: var(--muted); font-weight: 400; }
+        .plan-trial { font-size: 12px; color: var(--green); font-weight: 600; margin-bottom: 28px; display: block; }
+        .plan-features-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+        .plan-features-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--text); }
+        .plan-features-list li .material-symbols-outlined { font-size: 17px; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+        .plan-features-list li.dim { color: var(--muted); }
+        .plan-features-list li.dim .material-symbols-outlined { color: var(--muted-2); }
+
+        /* ── CTA ──────────────────────────────────────────────────────── */
+        #cta { text-align: center; }
+        .cta-inner { max-width: 640px; margin: 0 auto; }
+        .cta-inner h2 { margin-bottom: 16px; }
+        .cta-inner p  { font-size: 17px; margin-bottom: 36px; }
+        .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        /* ── Footer ──────────────────────────────────────────────────── */
+        footer { background: var(--bg); border-top: 1px solid var(--border); padding: 36px 0; }
+        .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .footer-logo { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: var(--white); }
+        .footer-logo img { width: 26px; height: 26px; object-fit: contain; }
+        .footer-copy { font-size: 12px; color: var(--muted-2); }
+
+        /* ── Scroll bar ──────────────────────────────────────────────── */
+        #scroll-bar { position: fixed; top: 0; left: 0; height: 2px; background: rgba(255,255,255,0.45); z-index: 300; width: 0%; transition: width 0.08s linear; }
+
+        /* ── Animations ──────────────────────────────────────────────── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeLeft {
+            from { opacity: 0; transform: translateX(-28px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(28px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        @keyframes floatY {
+            0%,100% { transform: translateY(0); }
+            50%     { transform: translateY(-8px); }
+        }
+        @keyframes shimmerGlow {
+            0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.04); }
+            50%     { box-shadow: 0 0 32px 8px rgba(255,255,255,0.06); }
+        }
+
+        .reveal {
+            opacity: 0; transform: translateY(32px);
+            transition: opacity 0.65s cubic-bezier(.22,.68,0,1.2), transform 0.65s cubic-bezier(.22,.68,0,1.2);
+        }
+        .reveal.from-left  { transform: translateX(-28px); }
+        .reveal.from-right { transform: translateX(28px); }
+        .reveal.scale-in   { transform: scale(0.85); opacity: 0; }
+        .reveal.visible    { opacity: 1; transform: translate(0,0) scale(1); }
+
+        /* Hero direct animations */
+        .hero-badge   { animation: scaleIn  0.6s cubic-bezier(.22,.68,0,1.2) both 0.05s, pulseBadge 2.5s ease-in-out infinite 1s; }
+        .hero-title   { animation: fadeUp   0.75s cubic-bezier(.22,.68,0,1.2) both 0.15s; }
+        .hero-desc    { animation: fadeUp   0.75s cubic-bezier(.22,.68,0,1.2) both 0.28s; }
+        .hero-cta     { animation: fadeUp   0.75s cubic-bezier(.22,.68,0,1.2) both 0.4s; }
+        .hero-stats   { animation: fadeUp   0.75s cubic-bezier(.22,.68,0,1.2) both 0.52s; }
+
+        /* Screenshot glow */
+        .screenshot-wrap { animation: shimmerGlow 5s ease-in-out infinite; }
+
+        /* Stat counter */
+        .stat-num { animation: fadeUp 0.7s cubic-bezier(.22,.68,0,1.2) both; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal.from-left, .reveal.from-right, .reveal.scale-in { opacity: 1; transform: none; transition: none; }
+            .hero-badge, .hero-title, .hero-desc, .hero-cta, .hero-stats, .stat-num { animation: none; opacity: 1; transform: none; }
+            .screenshot-wrap { animation: none; }
+            #scroll-bar, #hero-canvas { display: none; }
+        }
+
+        /* ── Responsive ──────────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .modules-grid { grid-template-columns: 1fr 1fr; }
+            .steps-grid { grid-template-columns: 1fr 1fr; }
+            .audience-grid { grid-template-columns: 1fr; }
+            .pricing-grid  { grid-template-columns: 1fr; max-width: 480px; }
+        }
+        @media (max-width: 600px) {
+            .modules-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 20px; }
+            .section { padding: 64px 0; }
+            #hero { padding-top: 120px; padding-bottom: 72px; }
+            .hero-stats { gap: 28px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SCROLL BAR -->
+<div id="scroll-bar"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+    <div class="container">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <a href="index.html" class="nav-back">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    Volver
+                </a>
+                <div class="nav-divider"></div>
+                <a href="index.html" class="nav-logo">
+                    <img src="assets/logo.png" alt="CoreProject" />
+                    CoreProject<span style="color:var(--muted)">.cl</span>
+                </a>
+                <div class="nav-divider"></div>
+                <span class="nav-product-name">Sistema Integral</span>
+            </div>
+            <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-primary" style="font-size:13px;padding:10px 20px;">
+                Iniciar prueba gratuita
+                <span class="material-symbols-outlined" style="font-size:15px;">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="container">
+        <div class="hero-inner">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                En producción — disponible ahora
+            </div>
+            <h1 class="hero-title">
+                El sistema de gestión que tu<br>
+                <span class="hl">taller necesitaba</span>
+            </h1>
+            <p class="hero-desc">Ordenes de trabajo, inventario, clientes, agenda y finanzas — todo desde un solo panel, en la nube, sin instalaciones ni servidores propios.</p>
+            <div class="hero-cta">
+                <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-primary">
+                    Comenzar prueba gratuita — 30 días
+                    <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+                </a>
+                <a href="#modulos" class="btn btn-outline">
+                    Ver módulos
+                    <span class="material-symbols-outlined" style="font-size:16px;">keyboard_arrow_down</span>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-num" data-count="100">0</span>
+                    <span class="stat-label">% en la nube — acceso desde cualquier dispositivo</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">30</span>
+                    <span class="stat-label">días de prueba gratuita sin tarjeta</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">&lt;1</span>
+                    <span class="stat-label">día para estar operando con tu equipo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- SCREENSHOT -->
+<section id="screenshot" class="section">
+    <div class="container">
+        <div style="text-align:center;margin-bottom:44px;" class="reveal">
+            <span class="eyebrow">La plataforma</span>
+            <h2>Un panel que lo integra todo</h2>
+            <p style="max-width:520px;margin:12px auto 0;">Diseñado para que cualquier persona de tu equipo lo use desde el primer día, sin capacitaciones complejas.</p>
+        </div>
+        <div class="screenshot-wrap reveal">
+            <div class="screenshot-topbar">
+                <span class="dot dot-r"></span>
+                <span class="dot dot-y"></span>
+                <span class="dot dot-g"></span>
+                <span class="screenshot-url">sis.coreproject.cl — Panel principal</span>
+            </div>
+            <img src="assets/foto gestion integral.png" alt="Panel principal de Sistema Integral" class="screenshot-img" />
+        </div>
+    </div>
+</section>
+
+
+<!-- MÓDULOS -->
+<section id="modulos" class="section">
+    <div class="container">
+        <div class="section-header reveal" style="margin-bottom:52px;">
+            <span class="eyebrow">Módulos del sistema</span>
+            <h2>Todo lo que necesita tu taller, en un solo lugar</h2>
+            <p style="max-width:560px;">Cada módulo funciona de forma integrada. Los datos fluyen solos entre áreas — no hay copia-pega ni Excel en el medio.</p>
+        </div>
+        <div class="modules-grid">
+
+            <!-- Módulo 1 -->
+            <div class="module-card reveal">
+                <div class="module-icon">
+                    <span class="material-symbols-outlined" style="font-size:22px;">build_circle</span>
+                </div>
+                <h3>Órdenes de trabajo</h3>
+                <p>El núcleo del sistema. Crea, gestiona y cierra órdenes de servicio con trazabilidad completa.</p>
+                <ul class="module-features">
+                    <li>Registro de diagnóstico y trabajos realizados</li>
+                    <li>Asignación de técnicos y estado en tiempo real</li>
+                    <li>Historial completo por vehículo y cliente</li>
+                    <li>Generación de presupuesto desde la orden</li>
+                    <li>Cierre y facturación integrada</li>
+                </ul>
+            </div>
+
+            <!-- Módulo 2 -->
+            <div class="module-card reveal">
+                <div class="module-icon">
+                    <span class="material-symbols-outlined" style="font-size:22px;">inventory_2</span>
+                </div>
+                <h3>Inventario y stock</h3>
+                <p>Controla repuestos y materiales en tiempo real. Sin stock sorpresa, sin excesos sin sentido.</p>
+                <ul class="module-features">
+                    <li>Alta y baja automática por consumo en órdenes</li>
+                    <li>Alertas de stock mínimo configurables</li>
+                    <li>Múltiples proveedores por producto</li>
+                    <li>Historial de movimientos y auditoría</li>
+                    <li>Valor de inventario en tiempo real</li>
+                </ul>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="module-card reveal">
+                <div class="module-icon">
+                    <span class="material-symbols-outlined" style="font-size:22px;">people</span>
+                </div>
+                <h3>Base de clientes</h3>
+                <p>Toda la información de tus clientes y sus vehículos en un solo lugar, siempre accesible.</p>
+                <ul class="module-features">
+                    <li>Ficha de cliente con historial de servicios</li>
+                    <li>Registro de vehículos por cliente (múltiples)</li>
+                    <li>Datos de contacto y preferencias</li>
+                    <li>Búsqueda instantánea por patente o RUT</li>
+                    <li>Alertas de mantenciones próximas</li>
+                </ul>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="module-card reveal">
+                <div class="module-icon">
+                    <span class="material-symbols-outlined" style="font-size:22px;">calendar_month</span>
+                </div>
+                <h3>Agenda digital</h3>
+                <p>Agenda y coordina citas sin llamadas de más. Tus técnicos saben qué les toca cada día.</p>
+                <ul class="module-features">
+                    <li>Vista diaria, semanal y mensual</li>
+                    <li>Reservas desde el panel administrativo</li>
+                    <li>Asignación directa a técnico o box</li>
+                    <li>Estado de cada cita en tiempo real</li>
+                    <li>Recordatorios internos configurables</li>
+                </ul>
+            </div>
+
+            <!-- Módulo 5 -->
+            <div class="module-card reveal">
+                <div class="module-icon">
+                    <span class="material-symbols-outlined" style="font-size:22px;">bar_chart</span>
+                </div>
+                <h3>Reportes y PDF</h3>
+                <p>Genera documentos profesionales en segundos: presupuestos, órdenes y resúmenes para tu cliente.</p>
+                <ul class="module-features">
+                    <li>Presupuestos en PDF con logo de tu empresa</li>
+                    <li>Orden de trabajo firmable digitalmente</li>
+                    <li>Reporte de caja diaria / semanal</li>
+                    <li>Estado de cuenta por cliente</li>
+                    <li>Exportación en PDF o impresión directa</li>
+                </ul>
+            </div>
+
+            <!-- Módulo 6 -->
+            <div class="module-card reveal">
+                <div class="module-icon">
+                    <span class="material-symbols-outlined" style="font-size:22px;">monitoring</span>
+                </div>
+                <h3>Dashboard de gestión</h3>
+                <p>La vista ejecutiva de tu negocio. Toma decisiones con datos reales, no con memoria.</p>
+                <ul class="module-features">
+                    <li>Ingresos y egresos del período</li>
+                    <li>Órdenes abiertas vs. cerradas</li>
+                    <li>Servicios más frecuentes y rentables</li>
+                    <li>Productividad por técnico</li>
+                    <li>Clientes nuevos vs. recurrentes</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="section">
+    <div class="container">
+        <div class="section-header reveal" style="margin-bottom:52px;">
+            <span class="eyebrow">Flujo de trabajo</span>
+            <h2>¿Cómo funciona en el día a día?</h2>
+            <p style="max-width:520px;">El sistema acompaña la operación completa de tu taller, desde que entra el vehículo hasta que el cliente paga y se va.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <span class="step-num-big">Paso 01</span>
+                <h3>Llega el vehículo</h3>
+                <p>El recepcionista abre una nueva orden de trabajo. Busca al cliente por RUT o patente — si ya estuvo antes, todos sus datos aparecen al instante.</p>
+            </div>
+            <div class="step-card reveal">
+                <span class="step-num-big">Paso 02</span>
+                <h3>Diagnóstico y presupuesto</h3>
+                <p>El técnico registra el diagnóstico y agrega los trabajos y repuestos que se necesitan. El sistema genera el presupuesto en PDF para que el cliente apruebe.</p>
+            </div>
+            <div class="step-card reveal">
+                <span class="step-num-big">Paso 03</span>
+                <h3>Ejecución del servicio</h3>
+                <p>La orden queda asignada con estado "En progreso". El inventario se descuenta automáticamente al usar los repuestos. Sin Excel, sin anotar en papel.</p>
+            </div>
+            <div class="step-card reveal">
+                <span class="step-num-big">Paso 04</span>
+                <h3>Entrega y cobro</h3>
+                <p>La orden se cierra con el resumen del trabajo realizado. El sistema registra el pago, actualiza la caja y deja el historial del vehículo listo para la próxima visita.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- PARA QUIÉN ES -->
+<section id="para-quien" class="section">
+    <div class="container">
+        <div class="section-header reveal" style="margin-bottom:52px;text-align:center;">
+            <span class="eyebrow">Audiencia</span>
+            <h2>¿Para quién es el Sistema Integral?</h2>
+        </div>
+        <div class="audience-grid">
+            <div class="audience-card audience-no reveal from-left">
+                <div class="audience-title">
+                    <span>✗</span>
+                    <span>No es para ti si...</span>
+                </div>
+                <ul class="audience-list">
+                    <li><span class="ico">❌</span>Quieres seguir usando cuadernos o Excel para todo</li>
+                    <li><span class="ico">❌</span>No tienes intención de digitalizar tu operación</li>
+                    <li><span class="ico">❌</span>Buscas un sistema genérico sin soporte local</li>
+                    <li><span class="ico">❌</span>No quieres que tu equipo tenga visibilidad de las operaciones</li>
+                </ul>
+            </div>
+            <div class="audience-card audience-yes reveal from-right">
+                <div class="audience-title">
+                    <span>✓</span>
+                    <span>Es para ti si...</span>
+                </div>
+                <ul class="audience-list">
+                    <li><span class="ico">✅</span>Tu taller maneja más de 10 órdenes de trabajo por semana</li>
+                    <li><span class="ico">✅</span>Pierdes tiempo buscando información entre papeles o personas</li>
+                    <li><span class="ico">✅</span>Quieres saber en todo momento qué pasa en tu negocio</li>
+                    <li><span class="ico">✅</span>Necesitas profesionalizar la experiencia que le das a tus clientes</li>
+                    <li><span class="ico">✅</span>Quieres crecer sin contratar más personas solo para administrar</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- PRECIOS -->
+<section id="precios" class="section">
+    <div class="container">
+        <div class="section-header reveal" style="margin-bottom:52px;text-align:center;">
+            <span class="eyebrow">Planes</span>
+            <h2>Sin letra chica, precio claro</h2>
+            <p style="max-width:480px;margin:12px auto 0;">Empieza gratis por 30 días. Sin tarjeta de crédito, sin compromiso. Cancela cuando quieras.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="plan-card reveal from-left">
+                <span class="plan-name">Plan Base</span>
+                <div class="plan-price-wrap">
+                    <span class="plan-price">$37.990</span>
+                    <span class="plan-period"> / mes</span>
+                </div>
+                <span class="plan-trial">✓ 30 días gratis — sin tarjeta de crédito</span>
+                <ul class="plan-features-list">
+                    <li><span class="material-symbols-outlined">check_circle</span>Órdenes de trabajo ilimitadas</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Gestión de inventario y stock</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Base de clientes y vehículos</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Agenda digital</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Reportes PDF profesionales</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Dashboard con métricas clave</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Hasta 3 usuarios incluidos</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Soporte vía WhatsApp</li>
+                </ul>
+                <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;">
+                    Comenzar ahora
+                    <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+                </a>
+            </div>
+            <div class="plan-card featured-plan reveal from-right">
+                <span class="plan-name">Plan Empresa</span>
+                <div class="plan-price-wrap">
+                    <span class="plan-price" style="font-size:1.8rem;color:var(--muted);">A medida</span>
+                </div>
+                <span class="plan-trial" style="color:var(--muted);">Para operaciones con volumen alto o funcionalidades extra</span>
+                <ul class="plan-features-list">
+                    <li><span class="material-symbols-outlined">check_circle</span>Todo del Plan Base</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Usuarios ilimitados</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Módulos personalizados para tu operación</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Integraciones con tus sistemas actuales</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Implementación asistida por nuestro equipo</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>SLA de soporte prioritario</li>
+                    <li><span class="material-symbols-outlined">check_circle</span>Capacitación presencial o remota</li>
+                </ul>
+                <a href="index.html#contacto" class="btn btn-outline" style="width:100%;justify-content:center;">
+                    Hablar con el equipo
+                    <span class="material-symbols-outlined" style="font-size:16px;">chat</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA FINAL -->
+<section id="cta" class="section" style="border-bottom:none;">
+    <div class="container">
+        <div class="cta-inner reveal">
+            <span class="eyebrow">¿Listo para empezar?</span>
+            <h2>Tu taller operando en menos de 24 horas</h2>
+            <p>Sin instalaciones, sin servidores propios, sin IT. Solo entra, crea tu cuenta y empieza a registrar órdenes. Tienes 30 días gratis para comprobarlo.</p>
+            <div class="cta-btns">
+                <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-primary">
+                    Iniciar prueba gratuita
+                    <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+                </a>
+                <a href="index.html#contacto" class="btn btn-outline">
+                    Tengo preguntas — contactar
+                    <span class="material-symbols-outlined" style="font-size:16px;">chat</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <a href="index.html" class="footer-logo">
+                <img src="assets/logo.png" alt="CoreProject" />
+                CoreProject<span style="color:var(--muted)">.cl</span>
+            </a>
+            <p class="footer-copy">&copy; 2025 CoreProject.cl &mdash; Sistema Integral &mdash; Todos los derechos reservados.</p>
+            <a href="index.html#contacto" class="btn btn-outline" style="font-size:13px;padding:9px 18px;">Contactar</a>
+        </div>
+    </div>
+</footer>
+
+
+<script>
+    // ── Scroll progress bar ─────────────────────────────────────────────
+    const scrollBar = document.createElement('div');
+    scrollBar.id = 'scroll-bar';
+    document.body.prepend(scrollBar);
+    window.addEventListener('scroll', () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        scrollBar.style.width = (window.scrollY / max * 100) + '%';
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── Particle canvas ─────────────────────────────────────────────────
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, dots;
+        const N = 60;
+        function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+        function mkDot() {
+            return { x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.5+0.4, vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3, a:Math.random()*.3+0.06 };
+        }
+        function init() { resize(); dots = Array.from({length:N}, mkDot); }
+        function draw() {
+            ctx.clearRect(0,0,W,H);
+            dots.forEach(d => {
+                d.x += d.vx; d.y += d.vy;
+                if (d.x<0) d.x=W; if (d.x>W) d.x=0;
+                if (d.y<0) d.y=H; if (d.y>H) d.y=0;
+                ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+                ctx.fillStyle='rgba(255,255,255,'+d.a+')'; ctx.fill();
+            });
+            for (let i=0;i<dots.length;i++) for (let j=i+1;j<dots.length;j++) {
+                const dx=dots[i].x-dots[j].x, dy=dots[i].y-dots[j].y, dist=Math.sqrt(dx*dx+dy*dy);
+                if (dist<120) { ctx.beginPath(); ctx.moveTo(dots[i].x,dots[i].y); ctx.lineTo(dots[j].x,dots[j].y); ctx.strokeStyle='rgba(255,255,255,'+(0.07*(1-dist/120))+')'; ctx.lineWidth=0.6; ctx.stroke(); }
+            }
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener('resize', resize);
+        init(); draw();
+    })();
+
+    // ── IntersectionObserver reveal ─────────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+
+    const staggered = ['.module-card', '.step-card', '.plan-card'];
+    const singles   = ['.section-header', '.screenshot-wrap', '.cta-inner', '.audience-card'];
+
+    staggered.forEach(sel => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+            el.classList.add('reveal');
+            el.style.transitionDelay = (i % 4 * 0.1) + 's';
+            observer.observe(el);
+        });
+    });
+    singles.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+            if (!el.classList.contains('reveal')) el.classList.add('reveal');
+            observer.observe(el);
+        });
+    });
+
+    // ── Stat counter animation ──────────────────────────────────────────
+    document.querySelectorAll('[data-count]').forEach(el => {
+        const target = +el.dataset.count;
+        const obs = new IntersectionObserver(entries => {
+            if (!entries[0].isIntersecting) return;
+            obs.unobserve(el);
+            let start = 0, startTime = null;
+            const duration = 1200;
+            function step(ts) {
+                if (!startTime) startTime = ts;
+                const progress = Math.min((ts - startTime) / duration, 1);
+                el.textContent = Math.round(progress * target);
+                if (progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }, { threshold: 0.5 });
+        obs.observe(el);
+    });
+</script>
+
+</body>
+</html>

@@ -210,52 +210,94 @@
         /*  Animations  */
         #scroll-bar {
             position: fixed; top: 0; left: 0; height: 2px;
-            background: rgba(255,255,255,0.35); z-index: 300; width: 0%;
+            background: rgba(255,255,255,0.45); z-index: 300; width: 0%;
             transition: width 0.08s linear;
         }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(28px); }
+            from { opacity: 0; transform: translateY(32px); }
             to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeLeft {
-            from { opacity: 0; transform: translateX(-24px); }
+            from { opacity: 0; transform: translateX(-28px); }
             to   { opacity: 1; transform: translateX(0); }
         }
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(28px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.88); }
+            to   { opacity: 1; transform: scale(1); }
+        }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        @keyframes shimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position:  200% center; }
+        }
+        @keyframes floatY {
+            0%,100% { transform: translateY(0px); }
+            50%     { transform: translateY(-8px); }
+        }
+        @keyframes glowPulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.04); }
+            50%     { box-shadow: 0 0 28px 6px rgba(255,255,255,0.07); }
+        }
+        /* Reveal system */
         .reveal {
             opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(32px);
+            transition: opacity 0.65s cubic-bezier(.22,.68,0,1.2), transform 0.65s cubic-bezier(.22,.68,0,1.2);
         }
-        .reveal.from-left {
-            transform: translateX(-24px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .reveal.visible { opacity: 1; transform: translate(0,0); }
+        .reveal.from-left  { transform: translateX(-28px); }
+        .reveal.from-right { transform: translateX(28px); }
+        .reveal.scale-in   { transform: scale(0.88); opacity: 0; }
+        .reveal.visible    { opacity: 1; transform: translate(0,0) scale(1); }
+        /* Navbar */
         #navbar.scrolled {
             border-bottom-color: var(--border-md);
-            box-shadow: 0 4px 32px rgba(0,0,0,0.35);
+            box-shadow: 0 4px 32px rgba(0,0,0,0.4);
         }
         /* Card hover lift */
-        .service-card  { transition: background .25s, transform .25s, box-shadow .25s; }
-        .service-card:hover  { background: var(--bg-2); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
-        .process-step  { transition: background .25s, transform .25s; }
-        .process-step:hover  { background: var(--bg-2); transform: translateY(-3px); }
-        .product-card  { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 36px; transition: border-color .25s, transform .25s, box-shadow .25s; }
-        .product-card:hover  { border-color: var(--border-md); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
-        .product-card.featured { border-color: var(--border-md); }
-        .product-card.featured:hover { border-color: rgba(255,255,255,0.22); }
+        .service-card  { transition: background .25s, transform .3s cubic-bezier(.22,.68,0,1.2), box-shadow .25s; }
+        .service-card:hover  { background: var(--bg-2); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+        .process-step  { transition: background .25s, transform .3s cubic-bezier(.22,.68,0,1.2), box-shadow .25s; }
+        .process-step:hover  { background: var(--bg-2); transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
+        .product-card  { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 36px; transition: border-color .25s, transform .35s cubic-bezier(.22,.68,0,1.2), box-shadow .25s; }
+        .product-card:hover  { border-color: var(--border-md); transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.35); }
+        .product-card.featured { border-color: var(--border-md); cursor: pointer; animation: glowPulse 4s ease-in-out infinite; }
+        .product-card.featured:hover { border-color: rgba(255,255,255,0.28); animation: none; box-shadow: 0 24px 56px rgba(0,0,0,0.4); }
+        /* Service icon float */
+        .service-card:hover .service-icon { animation: floatY 2s ease-in-out infinite; }
+        /* Badge shimmer */
+        .badge-live {
+            background: linear-gradient(90deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.16) 50%, rgba(255,255,255,0.07) 100%);
+            background-size: 200% auto;
+            animation: shimmer 2.4s linear infinite;
+            color: var(--text);
+        }
+        /* Value rows */
+        .value-row { transition: background .2s, padding-left .2s; border-radius: 6px; margin-left: -8px; padding-left: 8px; }
+        .value-row:hover { background: rgba(255,255,255,0.03); padding-left: 16px; }
+        /* Tech items enhanced */
+        .tech-item { transition: opacity .2s, transform .3s cubic-bezier(.22,.68,0,1.2), border-color .2s, background .2s; }
+        .tech-item:hover { opacity: 1; transform: translateY(-4px) scale(1.06); border-color: var(--border-md); background: var(--bg-3,#1e2230); }
+        /* Contact detail hover */
+        .contact-detail { transition: transform .2s; }
+        .contact-detail:hover { transform: translateX(4px); }
         /* Hero entrance animations (CSS-based — no JS flash) */
-        .hero-title   { animation: fadeUp 0.7s ease both; animation-delay: 0.05s; }
-        .hero-desc    { animation: fadeUp 0.7s ease both; animation-delay: 0.22s; }
-        .hero-actions { animation: fadeUp 0.7s ease both; animation-delay: 0.38s; }
+        .hero-title   { animation: fadeUp 0.75s cubic-bezier(.22,.68,0,1.2) both; animation-delay: 0.05s; }
+        .hero-desc    { animation: fadeUp 0.75s cubic-bezier(.22,.68,0,1.2) both; animation-delay: 0.2s; }
+        .hero-actions { animation: fadeUp 0.75s cubic-bezier(.22,.68,0,1.2) both; animation-delay: 0.35s; }
         /* Typewriter cursor */
         .hero-label::after { content:'|'; color: var(--accent); animation: blink 1s step-start infinite; margin-left:1px; }
         .hero-label.typed::after { display: none; }
+        /* Particle canvas */
+        #hero-canvas { position:absolute; inset:0; z-index:0; pointer-events:none; }
         @media (prefers-reduced-motion: reduce) {
-            .reveal, .reveal.from-left { opacity:1; transform:none; transition:none; }
+            .reveal, .reveal.from-left, .reveal.from-right, .reveal.scale-in { opacity:1; transform:none; transition:none; }
             .hero-title, .hero-desc, .hero-actions { animation: none; opacity: 1; transform: none; }
-            #scroll-bar { display:none; }
+            .badge-live, .product-card.featured, .service-card:hover .service-icon { animation: none; }
+            #scroll-bar, #hero-canvas { display:none; }
             .hero-label::after { display:none; }
         }
 
@@ -330,6 +372,7 @@
 
 <!-- HERO -->
 <section id="hero">
+    <canvas id="hero-canvas"></canvas>
     <div class="container">
         <div class="hero-grid">
             <div>
@@ -471,16 +514,16 @@
                     <span class="product-tag">Dashboard</span>
                     <span class="product-tag">Base de clientes</span>
                 </div>
-                <div class="product-footer">
-                    <div class="product-price">
-                        <strong>$37.990</strong>
-                        <span>/ mes &mdash; plan base. Prueba gratuita 30 dias.</span>
-                    </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;">
+                    <a href="sistema-integral.html" target="_blank" class="btn btn-primary" style="font-size:13px;">
+                        Ver plataforma completa
+                        <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
+                    </a>
+                    <a href="https://sis.coreproject.cl/#/login" target="_blank" class="btn btn-outline" style="font-size:13px;">
+                        Prueba gratuita
+                        <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+                    </a>
                 </div>
-                <a href="https://sis.coreproject.cl/#/login" class="btn btn-primary" style="margin-top:20px;font-size:13px;">
-                    Comenzar prueba gratuita
-                    <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
-                </a>
             </div>
             <div class="product-card product-placeholder">
                 <span class="product-badge badge-soon">En desarrollo</span>
@@ -676,7 +719,60 @@
         });
     });
 
-    // ── Reveal on scroll — IntersectionObserver (ISC + MG Tech style) ──
+    // ── Particle canvas in hero ─────────────────────────────────────────
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, dots;
+        const DOT_COUNT = 55;
+        function resize() {
+            W = canvas.width  = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+        function mkDot() {
+            return {
+                x: Math.random() * W, y: Math.random() * H,
+                r: Math.random() * 1.4 + 0.4,
+                vx: (Math.random() - 0.5) * 0.28,
+                vy: (Math.random() - 0.5) * 0.28,
+                a: Math.random() * 0.35 + 0.08
+            };
+        }
+        function init() { resize(); dots = Array.from({length: DOT_COUNT}, mkDot); }
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            dots.forEach(d => {
+                d.x += d.vx; d.y += d.vy;
+                if (d.x < 0) d.x = W; if (d.x > W) d.x = 0;
+                if (d.y < 0) d.y = H; if (d.y > H) d.y = 0;
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,' + d.a + ')';
+                ctx.fill();
+            });
+            // draw connection lines between close dots
+            for (let i = 0; i < dots.length; i++) {
+                for (let j = i + 1; j < dots.length; j++) {
+                    const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(dots[i].x, dots[i].y);
+                        ctx.lineTo(dots[j].x, dots[j].y);
+                        ctx.strokeStyle = 'rgba(255,255,255,' + (0.06 * (1 - dist/110)) + ')';
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener('resize', () => { resize(); });
+        init(); draw();
+    })();
+
+    // ── Reveal on scroll — IntersectionObserver ─────────────────────────
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -684,21 +780,34 @@
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
 
     // Elements to reveal + stagger delay for grid children
-    const staggered = ['.service-card', '.process-step', '.product-card', '.value-row'];
-    const singles   = ['.section-header', '.about-left', '.contact-info', '.contact-grid > div:last-child', '.tech-strip'];
+    const staggered = ['.service-card', '.process-step', '.product-card', '.value-row', '.contact-detail'];
+    const singles   = ['.section-header', '.contact-info', '.contact-grid > div:last-child', '.tech-strip'];
 
     staggered.forEach(sel => {
         document.querySelectorAll(sel).forEach((el, i) => {
             el.classList.add('reveal');
-            el.style.transitionDelay = (i % 4 * 0.1) + 's';
+            el.style.transitionDelay = (i % 4 * 0.11) + 's';
             observer.observe(el);
         });
     });
     // about-left slides from left — set class BEFORE observing
-    document.querySelectorAll('.about-left').forEach(el => el.classList.add('from-left'));
+    document.querySelectorAll('.about-left').forEach(el => {
+        el.classList.add('reveal', 'from-left');
+        observer.observe(el);
+    });
+    // contact right side from right
+    document.querySelectorAll('.contact-grid > div:last-child').forEach(el => {
+        el.classList.add('from-right');
+    });
+    // scale-in for service icons and badges
+    document.querySelectorAll('.service-icon, .product-badge, .step-num, .eyebrow').forEach((el, i) => {
+        el.classList.add('reveal', 'scale-in');
+        el.style.transitionDelay = (i % 6 * 0.07) + 's';
+        observer.observe(el);
+    });
     singles.forEach(sel => {
         document.querySelectorAll(sel).forEach(el => {
             el.classList.add('reveal');
