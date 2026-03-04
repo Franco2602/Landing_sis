@@ -775,12 +775,9 @@
     // ── Reveal on scroll — IntersectionObserver ─────────────────────────
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
+            entry.target.classList.toggle('visible', entry.isIntersecting);
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -52px 0px' });
 
     // Elements to reveal + stagger delay for grid children
     const staggered = ['.service-card', '.process-step', '.product-card', '.value-row', '.contact-detail'];

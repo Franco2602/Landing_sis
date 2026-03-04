@@ -736,8 +736,8 @@
 
     // ── IntersectionObserver reveal ─────────────────────────────────────
     const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+        entries.forEach(e => { e.target.classList.toggle('visible', e.isIntersecting); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -52px 0px' });
 
     const staggered = ['.module-card', '.step-card', '.plan-card'];
     const singles   = ['.section-header', '.screenshot-wrap', '.cta-inner', '.audience-card'];
