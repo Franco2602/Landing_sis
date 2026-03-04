@@ -245,11 +245,16 @@
         .product-card:hover  { border-color: var(--border-md); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
         .product-card.featured { border-color: var(--border-md); }
         .product-card.featured:hover { border-color: rgba(255,255,255,0.22); }
+        /* Hero entrance animations (CSS-based — no JS flash) */
+        .hero-title   { animation: fadeUp 0.7s ease both; animation-delay: 0.05s; }
+        .hero-desc    { animation: fadeUp 0.7s ease both; animation-delay: 0.22s; }
+        .hero-actions { animation: fadeUp 0.7s ease both; animation-delay: 0.38s; }
         /* Typewriter cursor */
         .hero-label::after { content:'|'; color: var(--accent); animation: blink 1s step-start infinite; margin-left:1px; }
         .hero-label.typed::after { display: none; }
         @media (prefers-reduced-motion: reduce) {
             .reveal, .reveal.from-left { opacity:1; transform:none; transition:none; }
+            .hero-title, .hero-desc, .hero-actions { animation: none; opacity: 1; transform: none; }
             #scroll-bar { display:none; }
             .hero-label::after { display:none; }
         }
@@ -679,11 +684,11 @@
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
 
     // Elements to reveal + stagger delay for grid children
     const staggered = ['.service-card', '.process-step', '.product-card', '.value-row'];
-    const singles   = ['.section-header', '.about-left', '.contact-info', '.contact-grid > div:last-child', '.tech-strip', '.hero-title', '.hero-desc', '.hero-actions'];
+    const singles   = ['.section-header', '.about-left', '.contact-info', '.contact-grid > div:last-child', '.tech-strip'];
 
     staggered.forEach(sel => {
         document.querySelectorAll(sel).forEach((el, i) => {
@@ -692,14 +697,14 @@
             observer.observe(el);
         });
     });
+    // about-left slides from left — set class BEFORE observing
+    document.querySelectorAll('.about-left').forEach(el => el.classList.add('from-left'));
     singles.forEach(sel => {
         document.querySelectorAll(sel).forEach(el => {
             el.classList.add('reveal');
             observer.observe(el);
         });
     });
-    // about-left slides from left
-    document.querySelectorAll('.about-left').forEach(el => el.classList.add('from-left'));
 
     // ── Typewriter on hero label (Drimo terminal style) ─────────────────
     const label = document.querySelector('.hero-label');
