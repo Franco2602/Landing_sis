@@ -667,7 +667,7 @@
                         Enviar mensaje
                         <span class="material-symbols-outlined" style="font-size:17px;">send</span>
                     </button>
-                    <div id="form-success">Mensaje recibido. Te contactaremos en menos de 24 horas.</div>
+                    <div id="form-success">✅ Se abrió WhatsApp con tu mensaje listo. ¡Envíalo y te respondemos al tiro!</div>
                 </form>
             </div>
         </div>
@@ -873,11 +873,22 @@
         const interest = document.getElementById('f-interest').value;
         const message  = document.getElementById('f-message').value.trim();
         if (!name || !contact || !interest) return;
-        const subject = encodeURIComponent('Consulta web  ' + interest);
-        const body    = encodeURIComponent('Nombre: ' + name + '\nEmpresa: ' + (company || '') + '\nContacto: ' + contact + '\nInteres: ' + interest + '\n\n' + message);
-        window.open('mailto:contacto@coreproject.cl?subject=' + subject + '&body=' + body, '_blank');
+
+        const lines = [
+            '👋 *Nuevo contacto desde la web*',
+            '',
+            '👤 *Nombre:* ' + name,
+            company ? '🏢 *Empresa:* ' + company : null,
+            '📞 *Contacto:* ' + contact,
+            '🎯 *Interés:* ' + interest,
+            message ? '\n💬 *Mensaje:*\n' + message : null,
+        ].filter(l => l !== null).join('\n');
+
+        const waUrl = 'https://wa.me/56948408748?text=' + encodeURIComponent(lines);
+        window.open(waUrl, '_blank');
+
         document.getElementById('form-success').style.display = 'block';
-        document.getElementById('form-btn').textContent = 'Enviado';
+        document.getElementById('form-btn').textContent = 'Enviado ✓';
         setTimeout(() => {
             document.getElementById('form-success').style.display = 'none';
             document.getElementById('form-btn').innerHTML = 'Enviar mensaje <span class="material-symbols-outlined" style="font-size:17px;">send</span>';
