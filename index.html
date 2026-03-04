@@ -775,7 +775,13 @@
     // ── Reveal on scroll — IntersectionObserver ─────────────────────────
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            entry.target.classList.toggle('visible', entry.isIntersecting);
+            if (entry.isIntersecting) {
+                entry.target.style.transitionDelay = entry.target.dataset.delay || '0s';
+                entry.target.classList.add('visible');
+            } else {
+                entry.target.style.transitionDelay = '0s';
+                entry.target.classList.remove('visible');
+            }
         });
     }, { threshold: 0.12, rootMargin: '0px 0px -52px 0px' });
 
@@ -785,12 +791,14 @@
 
     staggered.forEach(sel => {
         document.querySelectorAll(sel).forEach((el, i) => {
+            const delay = (i % 4 * 0.11) + 's';
+            el.dataset.delay = delay;
+            el.style.transitionDelay = delay;
             el.classList.add('reveal');
-            el.style.transitionDelay = (i % 4 * 0.11) + 's';
             observer.observe(el);
         });
     });
-    // about-left slides from left — set class BEFORE observing
+    // about-left slides from left
     document.querySelectorAll('.about-left').forEach(el => {
         el.classList.add('reveal', 'from-left');
         observer.observe(el);
@@ -801,8 +809,10 @@
     });
     // scale-in for service icons and badges
     document.querySelectorAll('.service-icon, .product-badge, .step-num, .eyebrow').forEach((el, i) => {
+        const delay = (i % 6 * 0.07) + 's';
+        el.dataset.delay = delay;
+        el.style.transitionDelay = delay;
         el.classList.add('reveal', 'scale-in');
-        el.style.transitionDelay = (i % 6 * 0.07) + 's';
         observer.observe(el);
     });
     singles.forEach(sel => {
@@ -810,6 +820,17 @@
             el.classList.add('reveal');
             observer.observe(el);
         });
+    });
+
+    // ── Reset hero CSS animations on back navigation (bfcache) ─────────
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            document.querySelectorAll('.hero-title, .hero-desc, .hero-actions').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // reflow
+                el.style.animation = '';
+            });
+        }
     });
 
     // ── Typewriter on hero label (Drimo terminal style) ─────────────────

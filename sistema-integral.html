@@ -736,7 +736,15 @@
 
     // ── IntersectionObserver reveal ─────────────────────────────────────
     const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => { e.target.classList.toggle('visible', e.isIntersecting); });
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.transitionDelay = e.target.dataset.delay || '0s';
+                e.target.classList.add('visible');
+            } else {
+                e.target.style.transitionDelay = '0s';
+                e.target.classList.remove('visible');
+            }
+        });
     }, { threshold: 0.12, rootMargin: '0px 0px -52px 0px' });
 
     const staggered = ['.module-card', '.step-card', '.plan-card'];
@@ -744,8 +752,10 @@
 
     staggered.forEach(sel => {
         document.querySelectorAll(sel).forEach((el, i) => {
-            el.classList.add('reveal');
-            el.style.transitionDelay = (i % 4 * 0.1) + 's';
+            const delay = (i % 4 * 0.1) + 's';
+            el.dataset.delay = delay;
+            el.style.transitionDelay = delay;
+            if (!el.classList.contains('reveal')) el.classList.add('reveal');
             observer.observe(el);
         });
     });
@@ -754,6 +764,19 @@
             if (!el.classList.contains('reveal')) el.classList.add('reveal');
             observer.observe(el);
         });
+    });
+
+    // ── Reset hero CSS animations on back navigation (bfcache) ─────────
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            document.querySelectorAll('.hero-badge, .hero-title, .hero-desc, .hero-cta, .hero-stats').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight;
+                el.style.animation = '';
+            });
+            // Re-hide all reveal elements so they animate back in
+            document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+        }
     });
 
     // ── Stat counter animation ──────────────────────────────────────────
