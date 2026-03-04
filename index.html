@@ -667,7 +667,7 @@
                         Enviar mensaje
                         <span class="material-symbols-outlined" style="font-size:17px;">send</span>
                     </button>
-                    <div id="form-success">✅ Se abrió WhatsApp con tu mensaje listo. ¡Envíalo y te respondemos al tiro!</div>
+                    <div id="form-success">✅ ¡Mensaje enviado! Te contactaremos en breve.</div>
                 </form>
             </div>
         </div>
@@ -865,6 +865,9 @@
     }
 
     // ── Form submit ─────────────────────────────────────────────────────
+    const TG_TOKEN   = '8369093061:AAHkIewO9B3I8cvMSUnv8iB3tsiQhloOctg';
+    const TG_CHAT_ID = '6034698843';
+
     function handleSubmit(e) {
         e.preventDefault();
         const name     = document.getElementById('f-name').value.trim();
@@ -874,8 +877,12 @@
         const message  = document.getElementById('f-message').value.trim();
         if (!name || !contact || !interest) return;
 
-        const lines = [
-            '👋 *Nuevo contacto desde la web*',
+        const btn = document.getElementById('form-btn');
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+
+        const text = [
+            '📬 *Nuevo contacto desde la web*',
             '',
             '👤 *Nombre:* ' + name,
             company ? '🏢 *Empresa:* ' + company : null,
@@ -884,16 +891,33 @@
             message ? '\n💬 *Mensaje:*\n' + message : null,
         ].filter(l => l !== null).join('\n');
 
-        const waUrl = 'https://wa.me/56948408748?text=' + encodeURIComponent(lines);
-        window.open(waUrl, '_blank');
-
-        document.getElementById('form-success').style.display = 'block';
-        document.getElementById('form-btn').textContent = 'Enviado ✓';
-        setTimeout(() => {
-            document.getElementById('form-success').style.display = 'none';
-            document.getElementById('form-btn').innerHTML = 'Enviar mensaje <span class="material-symbols-outlined" style="font-size:17px;">send</span>';
-            e.target.reset();
-        }, 6000);
+        fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: TG_CHAT_ID, text: text, parse_mode: 'Markdown' })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.ok) {
+                document.getElementById('form-success').style.display = 'block';
+                btn.innerHTML = 'Enviado ✓';
+                e.target.reset();
+                setTimeout(() => {
+                    document.getElementById('form-success').style.display = 'none';
+                    btn.innerHTML = 'Enviar mensaje <span class="material-symbols-outlined" style="font-size:17px;">send</span>';
+                    btn.disabled = false;
+                }, 6000);
+            } else {
+                btn.innerHTML = 'Enviar mensaje <span class="material-symbols-outlined" style="font-size:17px;">send</span>';
+                btn.disabled = false;
+                alert('Error al enviar. Contáctanos directamente por WhatsApp.');
+            }
+        })
+        .catch(() => {
+            btn.innerHTML = 'Enviar mensaje <span class="material-symbols-outlined" style="font-size:17px;">send</span>';
+            btn.disabled = false;
+            alert('Error de red. Contáctanos directamente por WhatsApp.');
+        });
     }
 </script>
 
