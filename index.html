@@ -645,9 +645,15 @@
                             <input type="text" id="f-company" placeholder="Nombre de tu empresa" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="field-label" for="f-contact">Email o telefono *</label>
-                        <input type="text" id="f-contact" required placeholder="tucorreo@empresa.cl  o  +56 9 XXXX XXXX" />
+                    <div class="form-row">
+                        <div>
+                            <label class="field-label" for="f-email">Correo electrónico *</label>
+                            <input type="email" id="f-email" required placeholder="tucorreo@empresa.cl" />
+                        </div>
+                        <div>
+                            <label class="field-label" for="f-phone">Teléfono *</label>
+                            <input type="tel" id="f-phone" required placeholder="+56 9 XXXX XXXX" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="field-label" for="f-interest">En que te podemos ayudar? *</label>
@@ -872,10 +878,11 @@
         e.preventDefault();
         const name     = document.getElementById('f-name').value.trim();
         const company  = document.getElementById('f-company').value.trim();
-        const contact  = document.getElementById('f-contact').value.trim();
+        const email    = document.getElementById('f-email').value.trim();
+        const phone    = document.getElementById('f-phone').value.trim();
         const interest = document.getElementById('f-interest').value;
         const message  = document.getElementById('f-message').value.trim();
-        if (!name || !contact || !interest) return;
+        if (!name || !email || !phone || !interest) return;
 
         const btn = document.getElementById('form-btn');
         btn.disabled = true;
@@ -886,7 +893,8 @@
             '',
             '👤 *Nombre:* ' + name,
             company ? '🏢 *Empresa:* ' + company : null,
-            '📞 *Contacto:* ' + contact,
+            '� *Email:* ' + email,
+            '📞 *Teléfono:* ' + phone,
             '🎯 *Interés:* ' + interest,
             message ? '\n💬 *Mensaje:*\n' + message : null,
         ].filter(l => l !== null).join('\n');
