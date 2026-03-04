@@ -209,13 +209,21 @@
         .form-group  { margin-bottom: 18px; }
         .form-row    { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
         label.field-label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
-        input[type="text"], input[type="email"], textarea, select {
+        input[type="text"], input[type="email"], input[type="tel"], textarea, select {
             width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--white);
             font-family: inherit; font-size: 14px; padding: 11px 14px; border-radius: 8px; outline: none;
             transition: border-color .2s; appearance: none;
         }
         input::placeholder, textarea::placeholder { color: var(--muted-2); }
-        input:focus, textarea:focus, select:focus { border-color: var(--border-md); }
+        input:focus, textarea:focus, select:focus { border-color: var(--border-md); outline: none; }
+        /* Override browser autofill white background */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 1000px var(--bg) inset !important;
+            -webkit-text-fill-color: var(--white) !important;
+            caret-color: var(--white);
+        }
         textarea { resize: vertical; min-height: 110px; }
         select option { background: var(--bg-2); color: var(--white); }
         #form-success { display: none; margin-top: 14px; font-size: 13.5px; font-weight: 500; color: #4ade80; padding: 12px 16px; background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.2); border-radius: 8px; }
